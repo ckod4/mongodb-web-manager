@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MongoDB Web Manager</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="app">
+            <header class="header">
+                <h1>🍃 MongoDB Web Manager</h1>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Not Connected</span>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="connection-panel">
+                        <h3>Connection</h3>
+                        <div class="form-group">
+                            <label for="connectionString">MongoDB URI</label>
+                            <input
+                                type="text"
+                                id="connectionString"
+                                placeholder="mongodb://localhost:27017"
+                                value="mongodb://localhost:27017"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="databaseName"
+                                >Database (optional)</label
+                            >
+                            <input
+                                type="text"
+                                id="databaseName"
+                                placeholder="myDatabase"
+                            />
+                        </div>
+                        <button id="connectBtn" class="btn btn-primary">
+                            Connect
+                        </button>
+                    </div>
+
+                    <div class="database-tree" id="databaseTree">
+                        <h3>Databases</h3>
+                        <div class="tree-content" id="treeContent">
+                            <p class="no-data">
+                                Connect to MongoDB to see databases
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Panel -->
+                <main class="main-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="browse">
+                            Browse
+                        </button>
+                        <button class="tab-btn" data-tab="query">Query</button>
+                    </div>
+
+                    <!-- Browse Tab -->
+                    <div class="tab-content active" id="browse">
+                        <div class="browse-header">
+                            <h2 id="currentPath">Select a collection</h2>
+                            <div class="browse-controls">
+                                <select id="limitSelect">
+                                    <option value="20">20 per page</option>
+                                    <option value="50">50 per page</option>
+                                    <option value="100">100 per page</option>
+                                </select>
+                                <button id="refreshBtn" class="btn">
+                                    Refresh
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="documents-container">
+                            <div class="documents-grid" id="documentsGrid">
+                                <p class="no-data">
+                                    Select a collection to view documents
+                                </p>
+                            </div>
+
+                            <div
+                                class="pagination"
+                                id="pagination"
+                                style="display: none"
+                            >
+                                <button id="prevPage" class="btn">
+                                    Previous
+                                </button>
+                                <span id="pageInfo">Page 1 of 1</span>
+                                <button id="nextPage" class="btn">Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Query Tab -->
+                    <div class="tab-content" id="query">
+                        <div class="query-header">
+                            <h2>Query Builder</h2>
+                            <div class="query-controls">
+                                <select id="queryDatabase">
+                                    <option value="">Select Database</option>
+                                </select>
+                                <select id="queryCollection">
+                                    <option value="">Select Collection</option>
+                                </select>
+                                <select id="queryOperation">
+                                    <option value="find">find()</option>
+                                    <option value="findOne">findOne()</option>
+                                    <option value="count">count()</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="query-editor">
+                            <textarea
+                                id="queryInput"
+                                placeholder='{"name": "John"}'
+                                rows="10"
+                            ></textarea>
+                            <button id="executeQuery" class="btn btn-primary">
+                                Execute Query
+                            </button>
+                        </div>
+
+                        <div class="query-results">
+                            <h3>Results</h3>
+                            <pre id="queryResults">No query executed yet</pre>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
